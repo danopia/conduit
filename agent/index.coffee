@@ -14,6 +14,6 @@ ddp.connect (error, wasReconnect) ->
   metadataClient.get '/latest/meta-data/instance-id/', (err, req, res, data) ->
     return console.log "Metadata error #{err.stack or err}" if err
 
-    ddp.subscribe 'instance agent', [data], ->
-      console.log('identity received:');
-      console.log(ddpclient.collections.instances);
+    ddp.subscribe 'instance agent', [data, require('os').hostname()], ->
+      console.log 'identity received:'
+      console.log ddp.collections.instances

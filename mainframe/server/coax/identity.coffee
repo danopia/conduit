@@ -1,14 +1,14 @@
-Meteor.publish 'instance agent', (instanceId) ->
+Meteor.publish 'instance agent', (instanceId, hostname) ->
   console.log 'Instance', instanceId, 'connected'
 
   @onStop ->
-    Instances.update instanceId, online: false
+    Instances.update instanceId, $set: online: false
 
   if instance = Instances.findOne instanceId
-    Instances.update instanceId, online: true
+    Instances.update instanceId, $set: online: true
   else
     Instances.insert
       _id: instanceId
       firstSeen: new Date()
-      name: require('os').hostname()
+      name: hostname
       online: true
