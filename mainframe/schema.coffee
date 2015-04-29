@@ -6,7 +6,6 @@ Instances.attachSchema new SimpleSchema
   arn:       type: String, optional: true
   firstSeen: type: Date
   name:      type: String, max: 255
-  type:      type: String, max: 50
   online:    type: Boolean, defaultValue: false
 
   deps:      type: [new SimpleSchema
