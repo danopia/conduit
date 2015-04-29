@@ -1,0 +1,11 @@
+<template name="Layout">
+  <div class="contain-to-grid">
+    {{> Nav}}
+  </div>
+
+  <div class="primary row">
+    {{> yield}}
+  </div>
+
+  {{initFoundation}}
+</template>
