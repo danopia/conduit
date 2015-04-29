@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "coffee-script": "^1.9.2",
-    "ddp": "^0.11.0"
+    "ddp": "^0.11.0",
+    "restify": "^3.0.2"
   }
 }

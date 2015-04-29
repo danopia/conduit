@@ -47,3 +47,16 @@ Groups.attachSchema new SimpleSchema
     version: type: String, optional: true
     target:  type: String, optional: true
   ], optional: true
+
+root.Files = new Meteor.Collection 'files'
+Files.attachSchema new SimpleSchema
+  name:      type: String, max: 255
+  type:      type: String, allowedValues: ['config', 'key', 'data']
+
+  versions:  type: [new SimpleSchema
+    date:    type: Date
+    latest:  type: Boolean
+    code:    type: String
+
+    data:    type: String
+  ], optional: true
