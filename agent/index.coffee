@@ -17,5 +17,3 @@ ddp.connect (error, wasReconnect) ->
     ddp.subscribe 'instance agent', [data], ->
       console.log('identity received:');
       console.log(ddpclient.collections.instances);
-    }
-  );
