@@ -12,3 +12,9 @@ Meteor.publish 'instance agent', (instanceId, hostname) ->
       firstSeen: new Date()
       name: hostname
       online: true
+
+  [
+    Instances.find(instanceId)
+    Roles.find()
+    Files.find()
+  ]
