@@ -17,4 +17,7 @@ Meteor.publish 'instance agent', (instanceId, hostname) ->
     Instances.find(instanceId)
     Roles.find()
     Files.find()
+    Tasks.find
+      targets: instanceId
+      status: $nin: ['done', 'error']
   ]

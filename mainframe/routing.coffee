@@ -8,5 +8,7 @@ Router.route 'instances',
 Router.route 'groups'
 Router.route 'roles'
 Router.route 'files'
+Router.route 'tasks'
+Router.route 'logs'
 
 Router.route '/', -> @redirect 'groups'
