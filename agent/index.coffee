@@ -41,16 +41,19 @@ runTask = (task) ->
   , ->
 
     spawn = require('child_process').spawn
-    {command, args, options} = task.input
-    process = spawn command, args, options
+    {command, args, options, data, encoding} = task.input
+    {stdin, stdout, stderr} = process = spawn command, args, options
 
-    process.stdout.on 'data', (data) ->
-      updateTask task._id, $push:
-        'output.stdout': data.toString('utf8')
+    stdin.write(data, encoding) if data
+    stdin.end()
 
-    process.stderr.on 'data', (data) ->
+    stdout.on 'data', (data) ->
       updateTask task._id, $push:
-        'output.stderr': data.toString('utf8')
+        'output.stdout': data.toString(encoding)
+
+    stderr.on 'data', (data) ->
+      updateTask task._id, $push:
+        'output.stderr': data.toString(encoding)
 
     process.on 'error', (err) ->
       updateTask task._id, $set:
