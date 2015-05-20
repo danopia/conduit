@@ -11,6 +11,7 @@ Meteor.publish 'instance agent', (instanceId, hostname) ->
       _id: instanceId
       firstSeen: new Date()
       name: hostname
+      type: 'agent'
       online: true
 
   [
