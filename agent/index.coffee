@@ -28,4 +28,43 @@ ddp.connect (error, wasReconnect) ->
 
 setupAgent = (id) ->
   ddp.subscribe 'instance agent', [id, os.hostname()], ->
-    console.log 'identity received:', ddp.collections.instances
+    console.log 'identity received:', ddp.collections.instances[id]
+
+updateTask = (id, update, cb) ->
+  ddp.call '/tasks/update', [_id: id, update], cb
+
+runTask = (task) ->
+  updateTask task._id, $set:
+    output: {}
+    status: 'running'
+    startDate: new Date()
+  , ->
+
+    spawn = require('child_process').spawn
+    {command, args, options} = task.input
+    process = spawn command, args, options
+
+    process.stdout.on 'data', (data) ->
+      updateTask task._id, $push:
+        'output.stdout': data.toString('utf8')
+
+    process.stderr.on 'data', (data) ->
+      updateTask task._id, $push:
+        'output.stderr': data.toString('utf8')
+
+    process.on 'error', (err) ->
+      updateTask task._id, $set:
+        'output.error': name: err.name, message: err.message
+        status: 'error'
+        finishDate: new Date()
+
+    process.on 'close', (code, signal) ->
+      updateTask task._id, $set:
+        'output.code': signal
+        'output.status': 'done'
+        finishDate: new Date()
+
+observer = ddp.observe 'tasks'
+observer.added = (id) -> runTask ddp.collections.tasks[id]
+observer.changed = (id, oldFields, clearedFields, newFields) ->
+observer.removed = (id, oldValue) ->

@@ -4,9 +4,10 @@
   <table>
     <thead>
       <tr>
-        <th width="150">ID</th>
+        <th width="200">ID</th>
         <th>Name</th>
-        <th width="150">Status</th>
+        <th width="100">Status</th>
+        <th width="250">Uptime</th>
       </tr>
     </thead>
     <tbody>
@@ -15,6 +16,11 @@
           <td>{{_id}}</td>
           <td>{{name}}</td>
           <td>{{online}}</td>
+          <td class="uptime">
+            {{#with uptime}}
+              {{#each output.stdout}}{{this}}{{/each}}
+            {{/with}}
+          </td>
         </tr>
       {{/each}}
     </tbody>

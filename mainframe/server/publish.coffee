@@ -3,4 +3,8 @@ Meteor.publish 'data', -> [
   Roles.find()
   Files.find()
   Groups.find()
+  Tasks.find()
+  Logs.find()
+  Packets.find()
+  Engines.find()
 ]

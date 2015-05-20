@@ -60,17 +60,17 @@ Files.attachSchema new SimpleSchema
 root.Tasks = new Meteor.Collection 'tasks'
 Tasks.attachSchema new SimpleSchema
   type:      type: String, max: 255
-  body:      type: Object, blackbox: true
-  output:    type: Object, blackbox: true
-  status:    type: String, max: 255
+  input:     type: Object, blackbox: true, optional: true
+  output:    type: Object, blackbox: true, optional: true
+  status:    type: String, max: 255, defaultValue: 'queued'
 
   owner:     type: Target
   targets:   type: [Target]
-  recur:     type: Number
+  recur:     type: Number, optional: true
 
   queueDate: type: Date
-  startDate: type: Date
-  finishDate:type: Date
+  startDate: type: Date, optional: true
+  finishDate:type: Date, optional: true
 
 root.Logs = new Meteor.Collection 'logs'
 Logs.attachSchema new SimpleSchema
