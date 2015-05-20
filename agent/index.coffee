@@ -3,8 +3,8 @@ restify = require 'restify'
 os = require 'os'
 
 ddp = new DDP
-  host: '192.168.1.129'
-  port:  3000
+  host:  process.argv[2] || '192.168.1.129'
+  port: +process.argv[3] || 3000
   ssl:   false
 
 ddp.connect (error, wasReconnect) ->
