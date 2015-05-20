@@ -60,8 +60,9 @@ runTask = (task) ->
 
     process.on 'close', (code, signal) ->
       updateTask task._id, $set:
-        'output.code': signal
-        'output.status': 'done'
+        'output.code': code
+        'output.signal': signal
+        status: 'done'
         finishDate: new Date()
 
 observer = ddp.observe 'tasks'
